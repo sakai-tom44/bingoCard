@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bingo-card {
+            display: inline-block;
+            max-width: 300px;
+            background-color: #fff;
+            border: 1px solid #000;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .bingo_text td {
+            width: 25%;
+            background-color: #c4c4c4;
+        }
+
+        tr {
+            width: 100%;
+        }
+
+        td {
+            width: 60px;
+            height: 50px;
+            border: 1px solid #000;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+            font-size: 20px;
+        }
+
+        button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: none;
+            font-size: 20px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        button.marked {
+            background-color: #cc3333;
+            color: white;
+        }
+    </style>
+    <title>BINGO Card</title>
+</head>
+
+<body>
+    <div class="bingo-card">
+        <table class="bingo_text">
+            <tr>
+                <td>B</td>
+                <td>I</td>
+                <td>N</td>
+                <td>G</td>
+                <td>O</td>
+            </tr>
+        </table>
+        <table>
+            <div id="bingo-card-numbers">
+            </div>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', generateCard);
+
+        function generateCard() {
+            const numbers = [[],[],[],[],[]];
+            const bingoCard = document.getElementById('bingo-card-numbers');
+            bingoCard.innerHTML = '';
+
+            for (let i = 0; i < 5; i++) {
+                for (let j = 1; j <= 15; j++) {
+                    numbers[i].push((i*15)+j);
+                }
+            }
+
+            for (let row = 0; row < 5; row++) {
+                const tr = document.createElement('tr');
+                for (let col = 0; col < 5; col++) {
+                    const td = document.createElement('td');
+                    const randomIndex = Math.floor(Math.random() * numbers[col].length);
+                    const number = numbers[col].splice(randomIndex, 1);
+                    const button = document.createElement('button');
+                    button.textContent = number;
+                    button.addEventListener('click', () => markNumber(button));
+                    td.appendChild(button);
+                    tr.appendChild(td);
+                }
+                bingoCard.appendChild(tr);
+            }
+        }
+
+        function markNumber(button) {
+            if (!button.classList.contains('marked')) {
+                button.classList.add('marked');
+            } else {
+                button.classList.remove('marked');
+            }
+        }
+    </script>
+</body>
+
+</html>
