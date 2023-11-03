@@ -104,7 +104,11 @@
                     const randomIndex = Math.floor(Math.random() * numbers[col].length);
                     const number = numbers[col].splice(randomIndex, 1);
                     const button = document.createElement('button');
-                    button.textContent = number;
+                    if(row == 2 && col == 2){
+                        button.textContent = "★";
+                    }else{
+                        button.textContent = number;
+                    }
                     button.addEventListener('click', () => markNumber(button));
                     td.appendChild(button);
                     tr.appendChild(td);
